@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import { connectDB } from "./db.js";
+import { verifyJWT, verifyRole } from "./auth.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -18,6 +19,16 @@ app.get("/", (req, res) => {
   res.send({ message: "PizzaHub server is running" });
 });
 
+
+app.get("/api/me", verifyJWT, (req, res) => {
+  res.send(req.user);
+});
+
+
+app.get("/api/admin-check", verifyJWT, verifyRole("admin"), (req, res) => {
+  res.send({ message: "Hello admin" });
+});
+
 connectDB()
   .then(() => {
     app.listen(port, () => {
@@ -28,3 +39,4 @@ connectDB()
     console.error("Failed to connect to MongoDB:", err.message);
     process.exit(1);
   });
+
