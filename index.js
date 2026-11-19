@@ -6,6 +6,7 @@ import "dotenv/config";
 import { connectDB } from "./db.js";
 import { verifyJWT } from "./auth.js";
 import usersRouter from "./routes/users.js";
+import menuItemsRouter from "./routes/menuItems.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,6 +18,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use("/api/menu-items", menuItemsRouter);
 
 app.use(express.json());
 
