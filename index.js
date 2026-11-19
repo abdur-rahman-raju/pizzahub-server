@@ -1,11 +1,15 @@
+
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
+
 import { connectDB } from "./db.js";
-import { verifyJWT, verifyRole } from "./auth.js";
+import { verifyJWT } from "./auth.js";
+import usersRouter from "./routes/users.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
+
 
 app.use(
   cors({
@@ -13,7 +17,9 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
+
 
 app.get("/", (req, res) => {
   res.send({ message: "PizzaHub server is running" });
@@ -24,10 +30,7 @@ app.get("/api/me", verifyJWT, (req, res) => {
   res.send(req.user);
 });
 
-
-app.get("/api/admin-check", verifyJWT, verifyRole("admin"), (req, res) => {
-  res.send({ message: "Hello admin" });
-});
+app.use("/api/users", usersRouter);
 
 connectDB()
   .then(() => {
@@ -39,4 +42,3 @@ connectDB()
     console.error("Failed to connect to MongoDB:", err.message);
     process.exit(1);
   });
-
