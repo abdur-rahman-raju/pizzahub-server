@@ -9,6 +9,8 @@ import usersRouter from "./routes/users.js";
 import menuItemsRouter from "./routes/menuItems.js";
 import ordersRouter from "./routes/orders.js";
 import statsRouter from "./routes/stats.js";
+import paymentsRouter from "./routes/payments.js";
+
 
 
 const app = express();
@@ -25,7 +27,7 @@ app.use(
 app.use("/api/menu-items", menuItemsRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/stats", statsRouter);
-
+app.use("/api/payments", paymentsRouter);
 app.use(express.json());
 
 
