@@ -7,6 +7,7 @@ import { connectDB } from "./db.js";
 import { verifyJWT } from "./auth.js";
 import usersRouter from "./routes/users.js";
 import menuItemsRouter from "./routes/menuItems.js";
+import ordersRouter from "./routes/orders.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,6 +21,7 @@ app.use(
 );
 
 app.use("/api/menu-items", menuItemsRouter);
+app.use("/api/orders", ordersRouter);
 
 app.use(express.json());
 

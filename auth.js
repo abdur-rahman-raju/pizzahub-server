@@ -72,6 +72,7 @@ export async function verifyJWT(req, res, next) {
 
     next();
   } catch (error) {
+    console.error("JWT verify failed:", error.message);
     return res.status(401).send({
       message: "Unauthorized: invalid or expired token",
     });
