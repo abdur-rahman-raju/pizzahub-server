@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "make-admin": "node scripts/make-admin.js"
-  },
+ "scripts": {
+  "start": "node index.js",
+  "dev": "nodemon index.js",
+  "make-admin": "node scripts/make-admin.js",
+  "seed:demo": "node scripts/seed-demo-items.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
