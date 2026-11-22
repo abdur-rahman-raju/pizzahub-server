@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { getDB } from "../db.js";
-import { stripe, PREMIUM_DAYS } from "../stripe.js";
+import { getStripe, PREMIUM_DAYS } from "../stripe.js";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -61,7 +61,7 @@ async function activatePremium(session) {
 export async function stripeWebhook(req, res) {
   let event;
   try {
-    event = stripe.webhooks.constructEvent(
+    event = getStripe().webhooks.constructEvent(
       req.body, // raw Buffer
       req.headers["stripe-signature"],
       process.env.STRIPE_WEBHOOK_SECRET

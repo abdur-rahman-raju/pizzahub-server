@@ -1,16 +1,18 @@
 import express from "express";
 import { verifyJWT, verifyRole } from "../auth.js";
-import { stripe, PREMIUM_PRICE_CENTS, PREMIUM_DAYS } from "../stripe.js";
+import { getStripe, PREMIUM_PRICE_CENTS, PREMIUM_DAYS } from "../stripe.js";
 
 const router = express.Router();
 
+// ---------- Premium কেনার Checkout session (শুধু ভেন্ডর) ----------
+// POST /api/payments/checkout   -> { url }
 router.post("/checkout", verifyJWT, verifyRole("vendor"), async (req, res) => {
   try {
     if (req.user.subscriptionPlan === "premium") {
       return res.status(400).send({ message: "You already have an active Premium plan" });
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       line_items: [
         {
